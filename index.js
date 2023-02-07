@@ -58,6 +58,21 @@ const player = new Player({
         y: 0
     }
 })
+const keys = {
+    z: {
+        pressed: false
+    },
+    q: {
+        pressed: false
+    },
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+}
+
+let lastKey = ''
 
 const map = [
     ['-','-','-','-','-','-'], 
@@ -90,10 +105,21 @@ function animate() {
   // supprimer la trace jaune
   c.clearRect(0, 0, canvas.width, canvas.height)
   boundaries.forEach((boundary) => {
-boundary.draw()
-})
-
+    boundary.draw()
+  })
     player.update()
+    player.velocity.y = 0
+    player.velocity.x = 0
+    
+    if (keys.z.pressed && lastKey === 'z') {
+        player.velocity.y = -5
+    } else if (keys.q.pressed && lastKey === 'q') {
+        player.velocity.x= -5 
+    } else if (keys.d.pressed && lastKey === 'd') {
+        player.velocity.x= 5 
+    } else if (keys.s.pressed && lastKey === 's') {
+        player.velocity.y= 5 
+    }
 }
 
 animate()
@@ -102,36 +128,42 @@ animate()
 addEventListener('keydown', ({key}) => {
     switch (key) {
         case'z':
-            player.velocity.y = -5
+            keys.z.pressed = true
+            lastKey = 'z'
             break
         case'q':
-            player.velocity.x = -5
+            keys.q.pressed = true
+            lastKey = 'q'
             break
         case'd':
-            player.velocity.x = 5
+            keys.d.pressed = true
+            lastKey = 'd'
             break
         case's':
-            player.velocity.y = 5
+            keys.s.pressed = true
+            lastKey = 's'
             break                        
     }
-    console.log(player.velocity)
+    console.log(keys.q.pressed)
+    console.log(keys.d.pressed)
 })
 
 
-addEventListener('keyup', ({key}) => {
+addEventListener('keyup', ({ key }) => {
     switch (key) {
         case'z':
-            player.velocity.y = 0
+            keys.z.pressed = false
             break
         case'q':
-            player.velocity.x = 0
+            keys.q.pressed = false  
             break
         case'd':
-            player.velocity.x = 0
+            keys.d.pressed = false
             break
         case's':
-            player.velocity.y = 0
+            keys.s.pressed = false
             break                        
     }
-    console.log(player.velocity)
+    console.log(keys.q.pressed)
+    console.log(keys.d.pressed)
 })
