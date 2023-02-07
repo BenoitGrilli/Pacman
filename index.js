@@ -65,6 +65,7 @@ const keys = {
     q: {
         pressed: false
     },
+    d: {
         pressed: false
     },
     s: {
